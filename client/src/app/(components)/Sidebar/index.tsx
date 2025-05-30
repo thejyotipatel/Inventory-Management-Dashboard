@@ -16,7 +16,42 @@ const Sidebar = () => {
       </div>
 
       {/* LINKS */}
-      <div className='flex-grow'></div>
+      <div className='flex-grow mt-8'>{/* links */}</div>
+      {/* links */}
+
+      <div className='flex flex-col gap-2'>
+        <a
+          href='#'
+          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
+        >
+          Home
+        </a>
+        <a
+          href='#'
+          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
+        >
+          About
+        </a>
+        <a
+          href='#'
+          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
+        >
+          Services
+        </a>
+        <a
+          href='#'
+          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
+        >
+          Contact
+        </a>
+
+        {/* FOOTER */}
+        <div className=''></div>
+      </div>
+
+      <div className='text-center text-xs  text-gray-500  '>
+        <p>© 2023 ITMGDB. All rights reserved.</p>
+      </div>
     </div>
   )
 }
