@@ -1,56 +1,120 @@
 'use client'
 import React from 'react'
-import { Menu } from 'lucide-react'
+import { Archive, CircleDollarSign, ClipboardList, Icon, LayoutDashboard, LayoutIcon, LucideIcon, Menu, SlidersHorizontal, SlidersIcon, User } from 'lucide-react'
+import { useAppDispatch, useAppSelector } from '@/app/redux'
+import {  setIsSidebarCollapsed } from '@/state'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+interface SidebarLinkProps {
+  href: string;
+  icon: LucideIcon; // Use LucideIcon for icons 
+  label: string;
+  isCollapsed: boolean;
+}
+
+const SidebarLink = ({
+  href,
+  icon: Icon,
+  label,
+  isCollapsed,
+}: SidebarLinkProps) =>{
+  const pathname = usePathname()
+  const isActive = 
+  pathname === href || (pathname === '/' && href === '/dashboard')
+
+  return(
+    <Link href={href}>
+      <div className={`cursor-pointer flex items-center ${
+        isCollapsed? 'justify-center py-4': 'justify-start px-4 py-4'
+      } hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
+      isActive ? 'bg-blue-200 text-white' : ''
+      }`}>
+        <Icon className='w-6 h-6 !text-gray-700' />
+
+        <span className={`${
+          isCollapsed ? 'hidden' : 'block'
+        } font-medium text-gray-700`}>{label}</span>
+      </div>
+    </Link>
+  )
+}
 
 const Sidebar = () => {
-  return (
-    <div>
-      {/* TOP LOGO */}
-      <div className='flex gap-3 justify-between md:justify-normal items-center pt-8'>
-        <div className=''>LOGO</div>
-        <h1 className='font-extrabold text-2xl'>ITMGDB</h1>
+  const dispatch = useAppDispatch()
+   const isSidebarCollapsed = useAppSelector(
+      (state)=> state.global.isSidebarCollapsed
+    ) 
+    const toggleSidebar = () => {
+      dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))
+    }
 
-        <button className='md:hidden py-2 px-3 rounded-full bg-gray-100 hover:bg-blue-100 transition-colors duration-200'>
+    const sidebarClassNames = `fixed flex flex-col ${
+      isSidebarCollapsed ? 'w-0 md:w-16' : 'w-72 md:w-64'}
+      bg-white transition-all duration-300 overflow-hidden h-full shadow-md
+      z-40`
+
+  return (
+    <div className={sidebarClassNames}>
+      {/* TOP LOGO */} 
+      <div className={`flex gap-3 justify-between md:justify-normal items-center pt-8 ${
+        isSidebarCollapsed ? 'px-5' : 'px-8'
+      }`}>
+        <div className=''>LOGO</div>
+        <h1 className={` ${
+          isSidebarCollapsed ? 'hidden': 'block'
+        } font-extrabold text-2xl`}>ITMGDB</h1>
+
+        <button className='md:hidden py-2 px-3 rounded-full bg-gray-100 hover:bg-blue-100 transition-colors duration-200'
+        onClick={toggleSidebar}>
           <Menu className='w-4 h-4' />
         </button>
       </div>
 
       {/* LINKS */}
-      <div className='flex-grow mt-8'>{/* links */}</div>
-      {/* links */}
-
-      <div className='flex flex-col gap-2'>
-        <a
-          href='#'
-          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
-        >
-          Home
-        </a>
-        <a
-          href='#'
-          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
-        >
-          About
-        </a>
-        <a
-          href='#'
-          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
-        >
-          Services
-        </a>
-        <a
-          href='#'
-          className='text-gray-700 hover:text-blue-600 transition-colors duration-200'
-        >
-          Contact
-        </a>
-
-        {/* FOOTER */}
-        <div className=''></div>
+      <div className='flex-grow mt-8'>
+        <SidebarLink 
+        href='/dashboard'
+        icon={LayoutIcon}
+        label='Dashboard'
+        isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink 
+        href='/inventory'
+        icon={Archive}
+        label='Inventory'
+        isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink 
+        href='/products'
+        icon={ClipboardList}
+        label='Products'
+        isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink 
+        href='/users'
+        icon={User}
+        label='Users'
+        isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink 
+        href='/settings'
+        icon={SlidersHorizontal}
+        label='Settings'
+        isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink 
+        href='/expenses'
+        icon={CircleDollarSign}
+        label='Expenses'
+        isCollapsed={isSidebarCollapsed}
+        />
       </div>
 
-      <div className='text-center text-xs  text-gray-500  '>
-        <p>© 2023 ITMGDB. All rights reserved.</p>
+      {/* FOOTER */} 
+      <div className={`${isSidebarCollapsed ? 'hidden': 'block'}
+       mb-10`}> 
+        <p className='text-center text-xs  text-gray-500 '>©2025 ITMGDB.</p>
       </div>
     </div>
   )
