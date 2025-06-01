@@ -56,7 +56,7 @@ const Navbar = () => {
         <div className='hidden md:flex justify-between item-center gap-5'>
           <div className=''>
             <button onClick={toggleDarkMode}>
-               {isDarkMode ? (
+               {!isDarkMode ? (
                 <Sun className="cursor-pointer text-gray-500" size={24} />
               ) : (
                 <Moon className="cursor-pointer text-gray-500" size={24} />
