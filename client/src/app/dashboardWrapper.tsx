@@ -10,18 +10,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     (state) => state.global.isSidebarCollapsed
   );
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
-
-  useEffect(() => {
-    
-    if (isDarkMode) {
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.add("dark");
-    }
-  } );
+ 
+ useEffect(() => {
+  const root = document.documentElement;
+  if (isDarkMode) {
+    root.classList.add("dark");
+  } else {
+    root.classList.remove("dark");
+  }
+}, [isDarkMode]);
 
   return (
-    <div className="flex  w-full min-h-screen">
+    <div  className={` flex bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 w-full min-h-screen`}
+    >
       <Sidebar />
       <main
         className={`flex flex-col w-full h-full py-7 px-9 ${
@@ -29,11 +30,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         }`}
       >
         <Navbar />
-       
-      </main>
-      <div className="p-8 bg-white dark:bg-black text-black dark:text-white">
-  Test dark mode
-</div>
+       {children}
+      </main> 
     </div>
   );
 };
