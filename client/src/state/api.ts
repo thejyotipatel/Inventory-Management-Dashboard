@@ -1,42 +1,42 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export interface Product {
-  productId: string;
-  name: string;
-  price: number;
-  rating?: number;
-  stockQuantity: number;
+  productId: string
+  name: string
+  price: number
+  rating?: number
+  stockQuantity: number
 }
 export interface SaleSummary {
-  saleSummaryId: string;
-  totalValue: number;
-  changePercentage: number;
-  date: string;
+  saleSummaryId: string
+  totalValue: number
+  changePercentage: number
+  date: string
 }
 export interface PurchaseSummary {
-  purchaseSummaryId: string;
-  totalPurchased: number;
-  changePercentage: number;
-  date:string;
+  purchaseSummaryId: string
+  totalPurchased: number
+  changePercentage: number
+  date: string
 }
-export interface ExpenseSummary{
-  expenseSummaryId: string;
-  totalExpense: number;
-  date: string;
+export interface ExpenseSummary {
+  expenseSummaryId: string
+  totalExpense: number
+  date: string
 }
 export interface ExpenseByCategorySummary {
-  expenseByCategorySummaryId: string;
-  category: string;
-  amount: number;
-  date: string;
+  expenseByCategorySummaryId: string
+  category: string
+  amount: string
+  date: string
 }
-  
+
 export interface DashboardMetrics {
-  popularProducts: Product[];
-  saleSummary: SaleSummary[],
-  purchaseSummary: PurchaseSummary[],
-  expenseSummary: ExpenseSummary[],
-  expenseByCategorySummery: ExpenseByCategorySummary[],
+  popularProducts: Product[]
+  saleSummary: SaleSummary[]
+  purchaseSummary: PurchaseSummary[]
+  expenseSummary: ExpenseSummary[]
+  expenseByCategorySummery: ExpenseByCategorySummary[]
 }
 
 export const api = createApi({
@@ -46,9 +46,9 @@ export const api = createApi({
   endpoints: (build) => ({
     getDashboardMetrics: build.query<DashboardMetrics, void>({
       query: () => '/dashboard',
-      providesTags: ['DashboardMetrics']
-    })
+      providesTags: ['DashboardMetrics'],
+    }),
   }),
 })
 
-export const {useGetDashboardMetricsQuery} = api 
+export const { useGetDashboardMetricsQuery } = api

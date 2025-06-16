@@ -1,5 +1,15 @@
 import { useGetDashboardMetricsQuery } from '@/state/api'
 import { TrendingDown, TrendingUp } from 'lucide-react'
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
+import React from 'react'
 import numeral from 'numeral'
 
 const CardPurchaseSummary = () => {
@@ -50,6 +60,37 @@ const CardPurchaseSummary = () => {
                 )}
               </div>
             </div>
+
+            {/* CHART */}
+            <ResponsiveContainer width='100%' height={200} className='p-2'>
+              <AreaChart
+                data={purchaseData}
+                margin={{ top: 0, right: 0, left: -50, bottom: 45 }}
+              >
+                <XAxis dataKey='date' tick={false} axisLine={false} />
+                <YAxis tickLine={false} tick={false} axisLine={false} />
+                <Tooltip
+                  formatter={(value: number) => [
+                    `$${value.toLocaleString('en')}`,
+                  ]}
+                  labelFormatter={(label) => {
+                    const date = new Date(label)
+                    return date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                  }}
+                />
+                <Area
+                  type='linear'
+                  dataKey='totalPurchased'
+                  stroke='#8884d8'
+                  fill='#8884d8'
+                  dot={true}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </>
       )}
