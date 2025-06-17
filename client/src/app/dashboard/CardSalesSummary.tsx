@@ -13,7 +13,7 @@ import React, { useState } from 'react'
 
 const CardSalesSummary = () => {
   const { data, isLoading, isError } = useGetDashboardMetricsQuery()
-  const salesData = data?.saleSummary || []
+  const salesData = data?.salesSummary || []
   const [timeframe, setTimeFrame] = useState('weekly')
 
   const totalValueSum =

@@ -7,8 +7,8 @@ export interface Product {
   rating?: number
   stockQuantity: number
 }
-export interface SaleSummary {
-  saleSummaryId: string
+export interface SalesSummary {
+  salesSummaryId: string
   totalValue: number
   changePercentage: number
   date: string
@@ -33,10 +33,10 @@ export interface ExpenseByCategorySummary {
 
 export interface DashboardMetrics {
   popularProducts: Product[]
-  saleSummary: SaleSummary[]
+  salesSummary: SalesSummary[]
   purchaseSummary: PurchaseSummary[]
   expenseSummary: ExpenseSummary[]
-  expenseByCategorySummery: ExpenseByCategorySummary[]
+  expenseByCategorySummary: ExpenseByCategorySummary[]
 }
 
 export const api = createApi({

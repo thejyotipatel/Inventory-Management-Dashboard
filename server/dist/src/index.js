@@ -9,7 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
-// ROUTE IMPORTS 
+// ROUTE IMPORTS
 const dashboardRoutes_1 = __importDefault(require("./routes/dashboardRoutes"));
 // CONFIGURATION
 dotenv_1.default.config();
@@ -24,6 +24,9 @@ app.use((0, cors_1.default)());
 // ROUTES
 app.use('/dashboard', dashboardRoutes_1.default);
 // SERVER
+// const port = Number(process.env.PORT) || 3001
+// app.listen(port, '0.0.0.0', () => {
+//   console.log(`Server is running on port ${port}`)
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

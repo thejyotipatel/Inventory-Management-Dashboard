@@ -18,32 +18,35 @@ const CardPopularProducts = () => {
           </h3>
           <hr />
           <div className='overflow-auto h-full'>
-            {dashboardMetrics?.popularProducts.map((product) => (
-              <div className='flex items-center justify-between gap-3 px-5 py-7 border-b'>
-                <div className='flex items-center gap-2'>
-                  <div className='img'>img</div>
-                  <div className='flex flex-col justify-between gap-1'>
-                    <div className='font-bold text-gray-200'>
-                      {product.name}
-                    </div>
-                    <div className='flex text-sm items-center'>
-                      <span className='font-bold text-blue-50 text-sm'>
-                        ${product.price}
-                      </span>
-                      <span className='mx-3'>|</span>
-                      <Rating rating={product.rating || 0} />
+            {dashboardMetrics?.popularProducts.map((product) => {
+              return (
+                <div
+                  key={product.productId}
+                  className='flex items-center justify-between gap-3 px-5 py-7 border-b'
+                >
+                  <div className='flex items-center gap-2'>
+                    <div className='img'>img</div>
+                    <div className='flex flex-col justify-between gap-1'>
+                      <div className='font-bold '>{product.name}</div>
+                      <div className='flex text-sm items-center'>
+                        <span className='font-bold text-blue-50 text-sm'>
+                          ${product.price}
+                        </span>
+                        <span className='mx-3'>|</span>
+                        <Rating rating={product.rating || 0} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className='text-sm flex items-center'>
-                  <button className='p-2 rounded-full bg-blue-100 text-blue-600 mr-2'>
-                    <ShoppingBag className='w-4 h-4' />
-                  </button>
-                  {Math.round(product.stockQuantity / 1000)}k Sold
+                  <div className='text-sm flex items-center'>
+                    <button className='p-2 rounded-full bg-blue-100 text-blue-600 mr-2'>
+                      <ShoppingBag className='w-4 h-4' />
+                    </button>
+                    {Math.round(product.stockQuantity / 1000)}k Sold
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </>
       )}
