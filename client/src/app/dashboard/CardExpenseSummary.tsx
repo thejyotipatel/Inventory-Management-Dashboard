@@ -2,6 +2,7 @@ import {
   ExpenseByCategorySummary,
   useGetDashboardMetricsQuery,
 } from '@/state/api'
+import { TrendingUp } from 'lucide-react'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
 type ExpenseSums = {
@@ -11,6 +12,8 @@ const colors = ['#00C49F', '#0088FE', '#FFBB28']
 
 const CardExpenseSummary = () => {
   const { data: dashboardMetrics, isLoading } = useGetDashboardMetricsQuery()
+
+  const expenseSummary = dashboardMetrics?.expenseSummary[0]
 
   const expenseByCategorySummary =
     dashboardMetrics?.expenseByCategorySummary || []
@@ -40,25 +43,23 @@ const CardExpenseSummary = () => {
   const formattedTotalExpense = totalExpenses.toFixed(2)
 
   return (
-    <div className='row-span-3 flex flex-col justify-between shadow-md bg-white rounded-2xl'>
+    <div className='row-span-3 bg-white shadow-md rounded-2xl flex flex-col justify-between'>
       {isLoading ? (
         <div className='m-5'>Loading...</div>
       ) : (
         <>
           {/* HEADER */}
-          <div>
-            <h2 className='text-lg font-semibold mb-2 px-7 pt-5'>
-              Expense Summary
-            </h2>
-            <hr />
-          </div>
+          <h2 className='text-lg font-semibold mb-2 px-7 pt-5'>
+            Expense Summary
+          </h2>
+          <hr />
 
           {/* BODY */}
 
           <div className='xl:flex justify-between pr-7'>
             {/* CHART */}
             <div className='relative basis-3/5'>
-              <ResponsiveContainer width='100%' height={140}>
+              <ResponsiveContainer width='100%' height={130}>
                 <PieChart>
                   <Pie
                     data={expenseCategories}
@@ -85,6 +86,41 @@ const CardExpenseSummary = () => {
                 </span>
               </div>
             </div>
+            {/* LABELS */}
+            <ul className='flex flex-col justify-around items-center xl:items-start py-5 gap-3'>
+              {expenseCategories.map((category, index) => (
+                <li
+                  className='flex items-center text-xs'
+                  key={`legend-${index}`}
+                >
+                  <span
+                    className='mr-2 w-3 h-3 rounded-full'
+                    style={{ backgroundColor: colors[index % colors.length] }}
+                  ></span>
+                  {category.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* FOOTER */}
+          <div>
+            <hr />
+            {expenseSummary && (
+              <div className='flex justify-between items-center px-7 mb-4'>
+                <div className='pt-2'>
+                  <p className='text-sm'>
+                    Average:{' '}
+                    <span className='font-semibold'>
+                      ${expenseSummary.totalExpenses.toFixed(2)}
+                    </span>
+                  </p>
+                </div>
+                <span className='flex items-center mt-2'>
+                  <TrendingUp className='mr-2 text-green-500' />
+                  30%
+                </span>
+              </div>
+            )}
           </div>
         </>
       )}

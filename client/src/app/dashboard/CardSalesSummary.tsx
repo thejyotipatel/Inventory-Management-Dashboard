@@ -42,38 +42,36 @@ const CardSalesSummary = () => {
   }
 
   return (
-    <div className='flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 bg-white shadow-md rounded-2xl'>
+    <div className='row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl  '>
       {isLoading ? (
         <div className='m-5'>Loading...</div>
       ) : (
         <>
           {/* HEADER */}
-          <div>
-            <h2 className='text-lg font-semibold mb-2 px-7 pt-5'>
-              Sales Summary
-            </h2>
-            <hr />
-          </div>
+          <h2 className='text-lg font-semibold px-7 pt-5 pb-2'>
+            Sales Summary
+          </h2>
+          <hr />
 
           {/* BODY */}
-          <div className=''>
+          <div>
             {/* BODY HEADER */}
-            <div className='flex justify-between items-center mb-6 px-7 mt-5'>
+            <div className='flex  justify-between items-stretch  mb-6 px-7 mt-5'>
               <div className='text-lg font-medium'>
                 <p className='text-xs text-gray-400'>Value</p>
-              </div>
-              <span className='text-2xl font-extrabold'>
-                $
-                {(totalValueSum / 1000000).toLocaleString('en', {
-                  maximumFractionDigits: 2,
-                })}
-                m
-              </span>
-              <span className='text-green-500 text-sm ml-2'>
-                <TrendingUp className='w-5 h-5 inline' />
-                {averageChangePercentage.toFixed(2)}%
-              </span>
 
+                <span className='text-2xl font-extrabold'>
+                  $
+                  {(totalValueSum / 1000000).toLocaleString('en', {
+                    maximumFractionDigits: 2,
+                  })}
+                  m
+                </span>
+                <span className='text-green-500 text-sm ml-2'>
+                  <TrendingUp className='w-4 h-4 inline mr-1' />
+                  {averageChangePercentage.toFixed(2)}%
+                </span>
+              </div>
               <select
                 name=''
                 id=''
@@ -86,9 +84,8 @@ const CardSalesSummary = () => {
                 <option value='monthly'>Monthly</option>
               </select>
             </div>
-
             {/* CHART */}
-            <ResponsiveContainer width='100%' height={200} className='p-7'>
+            <ResponsiveContainer width='100%' height={250} className='px-7'>
               <BarChart
                 data={salesData}
                 margin={{ top: 0, right: 0, left: -25, bottom: 0 }}
@@ -97,13 +94,13 @@ const CardSalesSummary = () => {
                 <XAxis
                   dataKey='date'
                   tickFormatter={(value) => {
-                    const data = new Date(value)
-                    return `${data.getMonth() + 1}/${data.getDate()}`
+                    const date = new Date(value)
+                    return `${date.getMonth() + 1}/${date.getDate()}`
                   }}
                 />
                 <YAxis
                   tickFormatter={(value) => {
-                    return `${(value / 1000000).toFixed(0)}m`
+                    return `$${(value / 1000000).toFixed(0)}m`
                   }}
                   tick={{ fontSize: 12, dx: -1 }}
                   tickLine={false}
@@ -130,16 +127,17 @@ const CardSalesSummary = () => {
                 />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-          {/* FOOTER */}
-          <div>
-            <hr />
-            <div className='flex justify-between items-center mt-6 text-sm px-7 mb-4'>
-              <p>{salesData.length || 0} days</p>
-              <p className='text-sm'>
-                Highest Sales Date:{' '}
-                <span className='font-bold'>{highestValueDate}</span>
-              </p>
+
+            {/* FOOTER */}
+            <div>
+              <hr />
+              <div className='flex justify-between items-center mt-6 text-sm px-7 mb-4'>
+                <p>{salesData.length || 0} days</p>
+                <p className='text-sm'>
+                  Highest Sales Date:{' '}
+                  <span className='font-bold'>{highestValueDate}</span>
+                </p>
+              </div>
             </div>
           </div>
         </>

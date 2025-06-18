@@ -1,4 +1,4 @@
-@import 'tailwindcss'; 
+@import 'tailwindcss';
 
 *,
 *::before,
@@ -17,14 +17,17 @@ body,
   @apply text-gray-900;
 }
 
+hr {
+  border-color: #d1d5dc;
+}
 @media (min-width: 768px) {
   .custom-grid-rows {
-    grid-template-rows: repeat(8, 20vh);
+    grid-template-rows: repeat(8, 25vh);
   }
 }
 
 @media (min-width: 1280px) {
   .custom-grid-rows {
-    grid-template-rows: repeat(8, 7.5vh);
+    grid-template-rows: repeat(6, 7.5vh);
   }
 }

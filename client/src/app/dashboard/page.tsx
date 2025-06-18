@@ -4,6 +4,14 @@ import CardPopularProducts from './CardPopularProducts'
 import CardPurchaseSummary from './CardPurchaseSummary'
 import CardSalesSummary from './CardSalesSummary'
 import CardExpenseSummary from './CardExpenseSummary'
+import StatCard from './StatCard'
+import {
+  CheckCircle,
+  Package,
+  Tag,
+  TrendingDown,
+  TrendingUp,
+} from 'lucide-react'
 
 const Dashboard = () => {
   return (
@@ -13,9 +21,63 @@ const Dashboard = () => {
       <CardPurchaseSummary />
       <CardExpenseSummary />
 
-      <div className='row-span-1 xl:row-span-2 bg-gray-500' />
-      <div className='row-span-1 xl:row-span-2 bg-gray-500' />
-      <div className='row-span-1 xl:row-span-2 bg-gray-500' />
+      <StatCard
+        title='Customer & Expenses'
+        primaryIcon={<Package className='text-blue-600 w-6 h-6' />}
+        dateRange='22 - 29 October 2023'
+        details={[
+          {
+            title: 'Customer Growth',
+            amount: '128.45',
+            changePercentage: 134,
+            IconComponent: TrendingUp,
+          },
+          {
+            title: 'Expenses',
+            amount: '18.05',
+            changePercentage: -34,
+            IconComponent: TrendingDown,
+          },
+        ]}
+      />
+      <StatCard
+        title='Dues & Pending Orders'
+        primaryIcon={<CheckCircle className='text-blue-600 w-6 h-6' />}
+        dateRange='22 - 29 October 2023'
+        details={[
+          {
+            title: 'Dues',
+            amount: '238.00',
+            changePercentage: 124,
+            IconComponent: TrendingUp,
+          },
+          {
+            title: 'Pending Orders',
+            amount: '155',
+            changePercentage: -87,
+            IconComponent: TrendingDown,
+          },
+        ]}
+      />
+      <StatCard
+        title='Sales & Discount'
+        primaryIcon={<Tag className='text-blue-600 w-6 h-6' />}
+        dateRange='22 - 29 October 2023'
+        details={[
+          {
+            title: 'Sales',
+            amount: '1008.40',
+            changePercentage: 14,
+            IconComponent: TrendingUp,
+          },
+          {
+            title: 'Discount',
+            amount: '208.05',
+            changePercentage: -24,
+            IconComponent: TrendingDown,
+          },
+        ]}
+      />
     </div>
   )
 }
