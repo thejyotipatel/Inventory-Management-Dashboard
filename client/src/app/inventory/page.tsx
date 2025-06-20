@@ -35,7 +35,7 @@ const Inventory = () => {
     return <div className='m-5'>Loading...</div>
   }
 
-  if (isError) {
+  if (isError || !products) {
     return <div className='m-5'>Error to fetch products</div>
   }
   return (

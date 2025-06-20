@@ -45,15 +45,23 @@ export interface DashboardMetrics {
   expenseByCategorySummary: ExpenseByCategorySummary[]
 }
 
+export interface User {
+  userId: string
+  name: string
+  email: string
+}
+
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
   reducerPath: 'api',
-  tagTypes: ['DashboardMetrics', 'products'],
+  tagTypes: ['DashboardMetrics', 'products', 'Users'],
   endpoints: (build) => ({
+    // Endpoint to fetch dashboard metrics
     getDashboardMetrics: build.query<DashboardMetrics, void>({
       query: () => '/dashboard',
       providesTags: ['DashboardMetrics'],
     }),
+    // Endpoint to fetch products with optional search parameter
     getProducts: build.query<Product[], string | void>({
       query: (search) => ({
         url: '/products',
@@ -61,6 +69,7 @@ export const api = createApi({
       }),
       providesTags: ['products'],
     }),
+    // Endpoint to create a new product
     createProduct: build.mutation<Product[], NewProduct>({
       query: (newProduct) => ({
         url: '/products',
@@ -69,6 +78,11 @@ export const api = createApi({
       }),
       invalidatesTags: ['products'],
     }),
+    // Endpoint to fetch users
+    getUsers: build.query<User[], void>({
+      query: () => '/users',
+      providesTags: ['Users'],
+    }),
   }),
 })
 
@@ -76,4 +90,5 @@ export const {
   useGetDashboardMetricsQuery,
   useGetProductsQuery,
   useCreateProductMutation,
+  useGetUsersQuery,
 } = api

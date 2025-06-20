@@ -1,21 +1,41 @@
 'use client'
 
-import { useGetProductsQuery } from '@/state/api'
+import { useCreateProductMutation, useGetProductsQuery } from '@/state/api'
 import { PlusCircleIcon, SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 import Header from '@/app/(components)/Header'
+import Rating from '../(components)/Rating'
+import CreateProductModel from './CreateProductModel'
+
+type ProductFormData = {
+  name: string
+  price: number
+  stockQuantity: number
+  rating?: number
+}
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [isModelOpen, setIsModelOpen] = useState(false)
 
   const { data: products, isLoading, isError } = useGetProductsQuery(searchTerm)
+
+  const [createProduct] = useCreateProductMutation()
+
+  const handleCreateProduct = async (productData: ProductFormData) => {
+    await createProduct(productData)
+  }
+
   if (isLoading) {
     return <div className='m-5'>Loading...</div>
   }
 
-  if (isError) {
-    return <div className='m-5'>Error to fetch products</div>
+  if (isError || !products) {
+    return (
+      <div className='m-5 text-red-500'>
+        Error loading products. Please try again later.
+      </div>
+    )
   }
   return (
     <div className='mx-auto pb-5 w-full'>
@@ -57,11 +77,26 @@ const Products = () => {
                 <h3 className='text-lg text-gray-900 font-semibold'>
                   {product.name}
                 </h3>
+                <p className='text-gray-800'>{product.price.toFixed(2)}</p>
+                <div className='text-sm text-gray-600 mt-1'>
+                  Stock: {product.stockQuantity}
+                </div>
+                {product.rating && (
+                  <div className='flex items-center mt-2'>
+                    <Rating rating={product.rating} />
+                  </div>
+                )}
               </div>
             </div>
           ))
         )}
       </div>
+      {/* CREATE PRODUCT MODAL */}
+      <CreateProductModel
+        isOpen={isModelOpen}
+        onClose={() => setIsModelOpen(false)}
+        onCreate={handleCreateProduct}
+      />
     </div>
   )
 }
